@@ -17,7 +17,7 @@ public class LabelService {
 		return labelRepository.getById(id);
 	}
 
-	public List<Label> getALl() {
+	public List<Label> getAll() {
 		return labelRepository.getAll();
 	}
 
