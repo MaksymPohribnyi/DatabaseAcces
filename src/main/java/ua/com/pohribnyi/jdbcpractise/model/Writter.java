@@ -13,9 +13,14 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Writter {
 
-	private Integer id;
+	private Long id;
 	private String firstName;
 	private String lastName;
 	private List<Post> posts;
+
+	@Override
+	public String toString() {
+		return "Writter [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", posts=" + posts + "]\n";
+	}
 
 }

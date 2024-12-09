@@ -1,4 +1,4 @@
-package ua.com.pohribnyi.jdbcpractise.repository.impl;
+package ua.com.pohribnyi.jdbcpractise.repository.jdbc;
 
 import java.util.List;
 

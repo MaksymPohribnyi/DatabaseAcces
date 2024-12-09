@@ -1,4 +1,4 @@
-package ua.com.pohribnyi.jdbcpractise.repository.impl;
+package ua.com.pohribnyi.jdbcpractise.repository.jdbc;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,6 +11,7 @@ import ua.com.pohribnyi.jdbcpractise.exception.LabelNotFoundException;
 import ua.com.pohribnyi.jdbcpractise.model.Label;
 import ua.com.pohribnyi.jdbcpractise.repository.LabelRepository;
 import ua.com.pohribnyi.jdbcpractise.util.DBUtils;
+import ua.com.pohribnyi.jdbcpractise.util.mapper.LabelMapper;
 
 public class JDBCLabelRepositoryImpl implements LabelRepository {
 
@@ -27,10 +28,7 @@ public class JDBCLabelRepositoryImpl implements LabelRepository {
 			preparedStatement.setLong(1, id);
 			ResultSet resultSet = preparedStatement.executeQuery();
 			if (resultSet.next()) {
-				return Label.builder()
-						.id(resultSet.getLong("id"))
-						.name(resultSet.getString("name"))
-						.build();
+				return LabelMapper.mapResultSetToLabel(resultSet);
 			} else {
 				throw new LabelNotFoundException("Label not found by id: " + id);
 			}
@@ -45,10 +43,7 @@ public class JDBCLabelRepositoryImpl implements LabelRepository {
 			List<Label> labels = new ArrayList<>();
 			ResultSet resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
-				labels.add(Label.builder()
-						.id(resultSet.getLong("id"))
-						.name(resultSet.getString("name"))
-						.build());
+				labels.add(LabelMapper.mapResultSetToLabel(resultSet));
 			}
 			return labels;
 		} catch (SQLException e) {
@@ -63,10 +58,7 @@ public class JDBCLabelRepositoryImpl implements LabelRepository {
 			if (preparedStatement.executeUpdate() != 0) {
 				ResultSet resultSet = preparedStatement.getGeneratedKeys();
 				resultSet.next();
-				return Label.builder()
-						.id(resultSet.getLong("id"))
-						.name(resultSet.getString("name"))
-						.build();
+				return LabelMapper.mapResultSetToLabel(resultSet);
 			} else {
 				throw new JDBCRepoException("Save label failed, row wasn`t inserted");
 			}
@@ -83,10 +75,7 @@ public class JDBCLabelRepositoryImpl implements LabelRepository {
 			if (preparedStatement.executeUpdate() != 0) {
 				ResultSet resultSet = preparedStatement.getGeneratedKeys();
 				resultSet.next();
-				return Label.builder()
-						.id(resultSet.getLong("id"))
-						.name(resultSet.getString("name"))
-						.build();
+				return LabelMapper.mapResultSetToLabel(resultSet);
 				} else {
 				throw new JDBCRepoException("Update label failed, row wasn`t changed by id: " + t.getId());
 			}

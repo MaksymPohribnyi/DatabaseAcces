@@ -15,7 +15,7 @@ import ua.com.pohribnyi.jdbcpractise.util.enums.PostStatus;
 @Builder
 public class Post {
 
-	private Integer id;
+	private Long id;
 	private String content;
 	private Date createdAt;
 	private Date updatedAt;
