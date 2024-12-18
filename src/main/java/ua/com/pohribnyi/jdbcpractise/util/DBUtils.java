@@ -14,6 +14,10 @@ public class DBUtils {
 	private static final String PROPERTIES_PATH = "src/main/resources/application.properties";
 	private static Connection connection = null;
 
+	public static Connection getCurrentConnection() {
+		return connection;
+	}
+
 	public static Connection getConnection() {
 
 		if (connection == null) {

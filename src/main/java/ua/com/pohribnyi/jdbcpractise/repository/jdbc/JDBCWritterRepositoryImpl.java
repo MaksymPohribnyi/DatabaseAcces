@@ -39,8 +39,6 @@ public class JDBCWritterRepositoryImpl implements WritterRepository {
 		}
 	}
 
-	// TODO
-	// GET wrtitter Posts with left join
 	@Override
 	public List<Writter> getAll() {
 		try (PreparedStatement preparedStatement = DBUtils.getPreparedStatement(GET_ALL_SQL)) {
@@ -109,7 +107,7 @@ public class JDBCWritterRepositoryImpl implements WritterRepository {
 			preparedStatement.setLong(1, id);
 			ResultSet resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
-				posts.add(PostMapper.mapResultSetToPost(resultSet));
+				posts.add(PostMapper.mapResultSetToPostWithoutLabels(resultSet));
 			}
 			return posts;
 		} catch (SQLException e) {

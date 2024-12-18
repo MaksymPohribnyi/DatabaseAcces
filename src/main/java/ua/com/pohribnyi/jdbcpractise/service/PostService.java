@@ -17,7 +17,7 @@ public class PostService {
 		return postRepository.getById(id);
 	}
 
-	public List<Post> getALl() {
+	public List<Post> getAll() {
 		return postRepository.getAll();
 	}
 

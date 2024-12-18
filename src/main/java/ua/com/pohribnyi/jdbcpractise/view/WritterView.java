@@ -23,7 +23,7 @@ public class WritterView {
 
 		while (isRunning) {
 
-			System.out.println("#-------------------------------#");
+			System.out.println("#------------------------------------------#");
 			System.out.println("/___WRITTER VIEW___/");
 			System.out.println("HOW TO WORK WITH IT:");
 			System.out.println("1. Create writter");
@@ -31,8 +31,8 @@ public class WritterView {
 			System.out.println("3. Delete writter");
 			System.out.println("4. Get all writters");
 			System.out.println("5. Get writter by id");
-			System.out.println("6. <- Main menu");
-			System.out.println("#-------------------------------#");
+			System.out.println("0. <- Main menu");
+			System.out.println("#------------------------------------------#");
 
 			int choose = scanner.nextInt();
 			scanner.nextLine();
@@ -74,7 +74,7 @@ public class WritterView {
 				Writter receivedWritter = writterController.getWritterById(id);
 				System.out.println("Writter received: " + receivedWritter);
 				break;
-			case 6:
+			case 0:
 				isRunning = false;
 				break;
 			default:

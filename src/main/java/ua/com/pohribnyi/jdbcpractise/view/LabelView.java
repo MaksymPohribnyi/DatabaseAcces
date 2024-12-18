@@ -23,7 +23,7 @@ public class LabelView {
 
 		while (isRunning) {
 
-			System.out.println("#-------------------------------#");
+			System.out.println("#------------------------------------------#");
 			System.out.println("/___LABEL VIEW___/");
 			System.out.println("HOW TO WORK WITH IT:");
 			System.out.println("1. Create label");
@@ -31,8 +31,8 @@ public class LabelView {
 			System.out.println("3. Delete label");
 			System.out.println("4. Get all labels");
 			System.out.println("5. Get label by id");
-			System.out.println("6. <- Main menu");
-			System.out.println("#-------------------------------#");
+			System.out.println("0. <- Main menu");
+			System.out.println("#------------------------------------------#");
 
 			int choose = scanner.nextInt();
 			scanner.nextLine();
@@ -69,7 +69,7 @@ public class LabelView {
 				Label receivedLabel = labelController.getLabelById(id);
 				System.out.println("Label received: " + receivedLabel);
 				break;
-			case 6:
+			case 0:
 				isRunning = false;
 				break;
 			default:

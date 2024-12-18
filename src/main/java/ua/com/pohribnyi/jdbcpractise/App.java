@@ -6,7 +6,8 @@ package ua.com.pohribnyi.jdbcpractise;
 public class App {
 	
 	public static void main(String[] args) {
-       	ApplicationContext app = new ApplicationContext();
-       	app.start();
-    }
+		ApplicationContext app = new ApplicationContext();
+		app.start();
+		
+	}
 }
