@@ -18,6 +18,8 @@
 		<junit.version>5.11.0</junit.version>
 		<postgresql.driver.version>42.7.4</postgresql.driver.version>
 		<lombok.version>1.18.36</lombok.version>
+		<mockito-junit.version>5.14.2</mockito-junit.version>
+		<assertJ.version>3.26.3</assertJ.version>
 	</properties>
 
 	<dependencyManagement>
@@ -56,6 +58,21 @@
 			<artifactId>lombok</artifactId>
 			<version>${lombok.version}</version>
 			<scope>provided</scope>
+		</dependency>
+		<!--
+		https://mvnrepository.com/artifact/org.mockito/mockito-junit-jupiter -->
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-junit-jupiter</artifactId>
+			<version>${mockito-junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.assertj/assertj-core -->
+		<dependency>
+			<groupId>org.assertj</groupId>
+			<artifactId>assertj-core</artifactId>
+			<version>${assertJ.version}</version>
+			<scope>test</scope>
 		</dependency>
 
 
