@@ -12,6 +12,6 @@
 - Hibernate
 
 ## Branches explanation
-- **jdbc_impl** - jdbc version of interaction with db
+- **jdbcImpl** - jdbc version of interaction with db
 
 - **master** - hibernate version of interaction with db
