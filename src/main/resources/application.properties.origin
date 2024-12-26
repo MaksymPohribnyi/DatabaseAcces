@@ -1,0 +1,5 @@
+#config db connection
+db.driver=org.postgresql.Driver
+db.url=
+db.username=
+db.password=
