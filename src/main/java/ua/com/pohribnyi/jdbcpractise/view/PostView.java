@@ -22,6 +22,8 @@ public class PostView {
 	private final WritterController writterController;
 	private final LabelController labelController;
 
+	private final Scanner scanner = ApplicationContext.getScanner();
+
 	public PostView(PostController postController, WritterController writterController,
 			LabelController labelController) {
 		this.postController = postController;
@@ -35,8 +37,6 @@ public class PostView {
 	public void show() {
 
 		boolean isRunning = true;
-		Scanner scanner = ApplicationContext.getScanner();
-		long id;
 
 		while (isRunning) {
 
@@ -56,117 +56,19 @@ public class PostView {
 
 			switch (choose) {
 			case 1:
-				System.out.println("Enter content name for new post:");
-				String content = scanner.nextLine();
-				System.out.println("Now choose an id from writter list:");
-				System.out.printf("----------------------------------------%n");
-				System.out.printf("| %-5s | %-10s | %-15s |%n", "ID", "first_name", "last_name");
-				System.out.printf("----------------------------------------%n");
-				List<Writter> writters = writterController.getAllWritters();
-				for (Writter writter : writters) {
-					System.out.printf("| %-5s ", writter.getId());
-					System.out.printf("| %-10s ", writter.getFirstName());
-					System.out.printf("| %-15s |", writter.getLastName());
-					System.out.println();
-				}
-				Long choosedId = scanner.nextLong();
-				Writter writter = writters.stream().filter(w -> w.getId() == choosedId).findFirst().orElse(null);
-				if (writter != null) {
-					System.out.println("Now choose one id from label list, or several spliting by ',':");
-					System.out.printf("---------------------------%n");
-					System.out.printf("| %-5s | %-15s |%n", "ID", "name");
-					System.out.printf("---------------------------%n");
-					List<Label> allLabels = labelController.getAllLabels();
-					for (Label label : allLabels) {
-						System.out.printf("| %-5s ", label.getId());
-						System.out.printf("| %-15s |", label.getName());
-						System.out.println();
-					}
-					scanner.nextLine();
-					String idLine = scanner.nextLine();
-					List<String> labelIds = new ArrayList<>(Arrays.asList(idLine.split(",")));
-					Set<Long> setOfLabelIds = labelIds.stream().map(Long::parseLong).collect(Collectors.toSet());
-					List<Label> choosedLabels = allLabels.stream().filter(l -> setOfLabelIds.contains(l.getId()))
-							.collect(Collectors.toList());
-					Post createdPost = postController.createPost(content, writter, choosedLabels);
-					System.out.println("Post created: " + createdPost);
-				} else {
-					System.out.println("Incorrect writter id. Try again");
-				}
+				createPost();
 				break;
 			case 2:
-				System.out.println("Enter existing id: ");
-				id = scanner.nextLong();
-				Post postToUpd = postController.getPostById(id);
-				if (postToUpd != null) {
-					scanner.nextLine();
-					System.out.println("Enter new content name to update post:");
-					String updContent = scanner.nextLine();
-					System.out.println("Now choose an id from writter list to switch writter:");
-					System.out.printf("----------------------------------------%n");
-					System.out.printf("| %-5s | %-10s | %-15s |%n", "ID", "first_name", "last_name");
-					System.out.printf("----------------------------------------%n");
-					List<Writter> AllWitters = writterController.getAllWritters();
-					for (Writter CurWritter : AllWitters) {
-						System.out.printf("| %-5s ", CurWritter.getId());
-						System.out.printf("| %-10s ", CurWritter.getFirstName());
-						System.out.printf("| %-15s |", CurWritter.getLastName());
-						System.out.println();
-					}
-					Long choosedWritterId = scanner.nextLong();
-					Writter updWritter = AllWitters.stream().filter(w -> w.getId() == choosedWritterId).findFirst()
-							.orElse(null);
-					if (updWritter != null) {
-						System.out.println("Now choose one id from label list, or several spliting by ',':");
-						System.out.printf("---------------------------%n");
-						System.out.printf("| %-5s | %-15s |%n", "ID", "name");
-						System.out.printf("---------------------------%n");
-						List<Label> allLabels = labelController.getAllLabels();
-						for (Label label : allLabels) {
-							System.out.printf("| %-5s ", label.getId());
-							System.out.printf("| %-15s |", label.getName());
-							System.out.println();
-						}
-						scanner.nextLine();
-						String idLine = scanner.nextLine();
-						List<String> labelIds = new ArrayList<>(Arrays.asList(idLine.split(",")));
-						Set<Long> setOfLabelIds = labelIds.stream().map(Long::parseLong).collect(Collectors.toSet());
-						List<Label> choosedLabels = allLabels.stream().filter(l -> setOfLabelIds.contains(l.getId()))
-								.collect(Collectors.toList());
-						System.out.println("Choose new status for update post:");
-						System.out.println(PostStatus.ACTIVE + " - enter: '" + PostStatus.ACTIVE.ordinal() + "' ");
-						System.out.println(
-								PostStatus.UNDER_REVIEW + " - enter: '" + PostStatus.UNDER_REVIEW.ordinal() + "' ");
-						System.out.println(PostStatus.DELETED + " - enter: '" + PostStatus.DELETED.ordinal() + "' ");
-						int updStatus = scanner.nextInt();
-						try {
-							PostStatus choosedStatus = PostStatus.values()[updStatus];
-							Post updatedPost = postController.updatePost(postToUpd.getId(), updContent, updWritter, choosedLabels,
-									choosedStatus);
-							System.out.println("Post updated: " + updatedPost);
-						} catch (ArrayIndexOutOfBoundsException e) {
-							System.out.println("Incorrect status id. Try again");
-						}
-					} else {
-						System.out.println("Incorrect writter id. Try again");
-					}
-				}
+				updatePost();
 				break;
 			case 3:
-				System.out.println("Enter existing id: ");
-				id = scanner.nextLong();
-				postController.deletePostById(id);
-				System.out.println("Post deleted");
+				deletePost();
 				break;
 			case 4:
-				List<Post> posts = postController.getAllPosts();
-				System.out.println(posts);
+				getAllPosts();
 				break;
 			case 5:
-				System.out.println("Enter existing id: ");
-				id = scanner.nextLong();
-				Post receivedPost = postController.getPostById(id);
-				System.out.println("Post received: " + receivedPost);
+				getPostById();
 				break;
 			case 0:
 				isRunning = false;
@@ -176,6 +78,115 @@ public class PostView {
 				break;
 			}
 		}
+	}
+
+	private void createPost() {
+		System.out.println("Enter content name for new post:");
+		String content = scanner.nextLine();
+		System.out.println("Now choose an id from writter list:");
+		List<Writter> writters = showAllWritters();
+		Long choosedId = scanner.nextLong();
+		Writter writter = writters.stream().filter(w -> w.getId() == choosedId).findFirst().orElse(null);
+		if (writter != null) {
+			System.out.println("Now choose one id from label list, or several spliting by ',':");
+			List<Label> allLabels = showAllLabels();
+			scanner.nextLine();
+			String idLine = scanner.nextLine();
+			List<String> labelIds = new ArrayList<>(Arrays.asList(idLine.split(",")));
+			Set<Long> setOfLabelIds = labelIds.stream().map(Long::parseLong).collect(Collectors.toSet());
+			List<Label> choosedLabels = allLabels.stream().filter(l -> setOfLabelIds.contains(l.getId()))
+					.collect(Collectors.toList());
+			Post createdPost = postController.createPost(content, writter, choosedLabels);
+			System.out.println("Post created: " + createdPost);
+		} else {
+			System.out.println("Incorrect writter id. Try again");
+		}
+	}
+
+	private void updatePost() {
+		System.out.println("Enter existing id: ");
+		long id = scanner.nextLong();
+		Post postToUpd = postController.getPostById(id);
+		if (postToUpd != null) {
+			scanner.nextLine();
+			System.out.println("Enter new content name to update post:");
+			String updContent = scanner.nextLine();
+			System.out.println("Now choose an id from writter list to switch writter:");
+			List<Writter> AllWitters = showAllWritters();
+			Long choosedWritterId = scanner.nextLong();
+			Writter updWritter = AllWitters.stream().filter(w -> w.getId() == choosedWritterId).findFirst()
+					.orElse(null);
+			if (updWritter != null) {
+				List<Label> allLabels = showAllLabels();
+				scanner.nextLine();
+				String idLine = scanner.nextLine();
+				List<String> labelIds = new ArrayList<>(Arrays.asList(idLine.split(",")));
+				Set<Long> setOfLabelIds = labelIds.stream().map(Long::parseLong).collect(Collectors.toSet());
+				List<Label> choosedLabels = allLabels.stream().filter(l -> setOfLabelIds.contains(l.getId()))
+						.collect(Collectors.toList());
+				System.out.println("Choose new status for update post:");
+				System.out.println(PostStatus.ACTIVE + " - enter: '" + PostStatus.ACTIVE.ordinal() + "' ");
+				System.out.println(PostStatus.UNDER_REVIEW + " - enter: '" + PostStatus.UNDER_REVIEW.ordinal() + "' ");
+				System.out.println(PostStatus.DELETED + " - enter: '" + PostStatus.DELETED.ordinal() + "' ");
+				int updStatus = scanner.nextInt();
+				try {
+					PostStatus choosedStatus = PostStatus.values()[updStatus];
+					Post updatedPost = postController.updatePost(postToUpd.getId(), updContent, updWritter,
+							choosedLabels, choosedStatus);
+					System.out.println("Post updated: " + updatedPost);
+				} catch (ArrayIndexOutOfBoundsException e) {
+					System.out.println("Incorrect status id. Try again");
+				}
+			} else {
+				System.out.println("Incorrect writter id. Try again");
+			}
+		}
+	}
+
+	private void getPostById() {
+		System.out.println("Enter existing id: ");
+		long id = scanner.nextLong();
+		Post receivedPost = postController.getPostById(id);
+		System.out.println("Post received: " + receivedPost);
+	}
+
+	private void getAllPosts() {
+		List<Post> posts = postController.getAllPosts();
+		System.out.println(posts);
+	}
+
+	private void deletePost() {
+		System.out.println("Enter existing id: ");
+		long id = scanner.nextLong();
+		postController.deletePostById(id);
+		System.out.println("Post deleted");
+	}
+
+	private List<Label> showAllLabels() {
+		System.out.printf("---------------------------%n");
+		System.out.printf("| %-5s | %-15s |%n", "ID", "name");
+		System.out.printf("---------------------------%n");
+		List<Label> allLabels = labelController.getAllLabels();
+		for (Label label : allLabels) {
+			System.out.printf("| %-5s ", label.getId());
+			System.out.printf("| %-15s |", label.getName());
+			System.out.println();
+		}
+		return allLabels;
+	}
+
+	private List<Writter> showAllWritters() {
+		System.out.printf("----------------------------------------%n");
+		System.out.printf("| %-5s | %-10s | %-15s |%n", "ID", "first_name", "last_name");
+		System.out.printf("----------------------------------------%n");
+		List<Writter> writters = writterController.getAllWritters();
+		for (Writter writter : writters) {
+			System.out.printf("| %-5s ", writter.getId());
+			System.out.printf("| %-10s ", writter.getFirstName());
+			System.out.printf("| %-15s |", writter.getLastName());
+			System.out.println();
+		}
+		return writters;
 	}
 
 }

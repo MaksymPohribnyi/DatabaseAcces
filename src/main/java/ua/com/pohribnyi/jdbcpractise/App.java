@@ -1,13 +1,13 @@
 package ua.com.pohribnyi.jdbcpractise;
 
-/**
- * Hello world!
- */
+import ua.com.pohribnyi.jdbcpractise.view.MainView;
+
 public class App {
-	
+
 	public static void main(String[] args) {
-		ApplicationContext app = new ApplicationContext();
-		app.start();
-		
+		ApplicationContext appContext = new ApplicationContext();
+
+		MainView mainView = new MainView(appContext);
+		mainView.show();
 	}
 }

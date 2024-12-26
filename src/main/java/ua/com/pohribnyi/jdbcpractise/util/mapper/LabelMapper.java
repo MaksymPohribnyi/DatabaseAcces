@@ -15,6 +15,8 @@ public class LabelMapper {
 	}
 	
 	public static Label mapLabelFromPostResultSet(ResultSet rs) throws SQLException {
+		if (rs.getLong("label_id") == 0 && rs.wasNull())
+			return null;
 		return Label.builder()
 				.id(rs.getLong("label_id"))
 				.name(rs.getString("name"))

@@ -61,7 +61,9 @@ public class PostMapper {
 	private static List<Label> getLabelsFromPostResultSet(ResultSet rs) throws SQLException {
 		List<Label> labels = new ArrayList<>();
 		// first call is needed to process the current line of ResultSet
-		labels.add(LabelMapper.mapLabelFromPostResultSet(rs));
+		Label currentRowLabel = LabelMapper.mapLabelFromPostResultSet(rs);
+		if (currentRowLabel != null)
+			labels.add(currentRowLabel);
 		while (rs.next()) {
 			labels.add(LabelMapper.mapLabelFromPostResultSet(rs));
 		}

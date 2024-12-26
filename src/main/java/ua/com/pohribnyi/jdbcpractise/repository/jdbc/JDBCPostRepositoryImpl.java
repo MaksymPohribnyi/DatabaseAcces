@@ -38,6 +38,7 @@ public class JDBCPostRepositoryImpl implements PostRepository {
 	private static final String DELETE_BY_ID_SQL = "UPDATE post SET status = ? WHERE id = ?";
 	private static final String DELETE_POST_LABELS_BY_ID_SQL = "DELETE FROM label_post WHERE post_id = ?";
 	private static final String INSERT_LABEL_POST_SQL = "INSERT INTO label_post VALUES(?, ?)";
+	private static final String GET_POST_LABELS_SQL = "SELECT * FROM label_post WHERE post_id = ?";
 
 	@Override
 	public Post getById(Long id) {
@@ -124,6 +125,8 @@ public class JDBCPostRepositoryImpl implements PostRepository {
 	}
 
 	private void deletePostLabelsByPostId(Long id) {
+		if (!postHasLabels(id))
+			return;
 		try (PreparedStatement preparedStatement = DBUtils.getPreparedStatement(DELETE_POST_LABELS_BY_ID_SQL)) {
 			preparedStatement.setLong(1, id);
 			if (preparedStatement.executeUpdate() == 0) {
@@ -155,6 +158,18 @@ public class JDBCPostRepositoryImpl implements PostRepository {
 		} catch (SQLException e) {
 			throw new JDBCRepoException(e.getMessage());
 		}
+	}
+	
+	private boolean postHasLabels(Long postId) {
+		boolean postHasLabels = false;
+		try (PreparedStatement preparedStatement = DBUtils.getPreparedStatement(GET_POST_LABELS_SQL)) {
+			preparedStatement.setLong(1, postId);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			postHasLabels = resultSet.next();
+		} catch (SQLException e) {
+			throw new JDBCRepoException(e.getMessage());
+		}
+		return postHasLabels;
 	}
 
 }

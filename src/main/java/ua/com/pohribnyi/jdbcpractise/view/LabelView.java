@@ -10,6 +10,7 @@ import ua.com.pohribnyi.jdbcpractise.model.Label;
 public class LabelView {
 
 	private final LabelController labelController;
+	private final Scanner scanner = ApplicationContext.getScanner();
 
 	public LabelView(LabelController controller) {
 		this.labelController = controller;
@@ -18,8 +19,6 @@ public class LabelView {
 	public void show() {
 
 		boolean isRunning = true;
-		Scanner scanner = ApplicationContext.getScanner();
-		long id;
 
 		while (isRunning) {
 
@@ -39,35 +38,19 @@ public class LabelView {
 
 			switch (choose) {
 			case 1:
-				System.out.println("Enter the name for new label:");
-				String name = scanner.nextLine();
-				Label createdLabel = labelController.createLabel(name);
-				System.out.println("Label created: " + createdLabel);
+				createLabel();
 				break;
 			case 2:
-				System.out.println("Enter the label id for update:");
-				id = scanner.nextLong();
-				scanner.nextLine();
-				System.out.println("Enter new name for label:");
-				String newName = scanner.nextLine();
-				Label updatedLabel = labelController.updateLabel(id, newName);
-				System.out.println("Label updated: " + updatedLabel);
+				updateLabel();
 				break;
 			case 3:
-				System.out.println("Enter existing id: ");
-				id = scanner.nextLong();
-				labelController.deleteLabelById(id);
-				System.out.println("Label deleted");
+				deleteLabel();
 				break;
 			case 4:
-				List<Label> labels = labelController.getAllLabels();
-				System.out.println(labels);
+				getAllLabels();
 				break;
 			case 5:
-				System.out.println("Enter existing id: ");
-				id = scanner.nextLong();
-				Label receivedLabel = labelController.getLabelById(id);
-				System.out.println("Label received: " + receivedLabel);
+				getLabelById();
 				break;
 			case 0:
 				isRunning = false;
@@ -78,4 +61,41 @@ public class LabelView {
 			}
 		}
 	}
+
+	private void createLabel() {
+		System.out.println("Enter the name for new label:");
+		String name = scanner.nextLine();
+		Label createdLabel = labelController.createLabel(name);
+		System.out.println("Label created: " + createdLabel);
+	}
+
+	private void updateLabel() {
+		System.out.println("Enter the label id for update:");
+		long id = scanner.nextLong();
+		scanner.nextLine();
+		System.out.println("Enter new name for label:");
+		String newName = scanner.nextLine();
+		Label updatedLabel = labelController.updateLabel(id, newName);
+		System.out.println("Label updated: " + updatedLabel);
+	}
+
+	private void getLabelById() {
+		System.out.println("Enter existing id: ");
+		long id = scanner.nextLong();
+		Label receivedLabel = labelController.getLabelById(id);
+		System.out.println("Label received: " + receivedLabel);
+	}
+
+	private void getAllLabels() {
+		List<Label> labels = labelController.getAllLabels();
+		System.out.println(labels);
+	}
+
+	private void deleteLabel() {
+		System.out.println("Enter existing id: ");
+		long id = scanner.nextLong();
+		labelController.deleteLabelById(id);
+		System.out.println("Label deleted");
+	}
+
 }

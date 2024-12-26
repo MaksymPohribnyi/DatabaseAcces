@@ -10,6 +10,7 @@ import ua.com.pohribnyi.jdbcpractise.model.Writter;
 public class WritterView {
 
 	private final WritterController writterController;
+	private final Scanner scanner = ApplicationContext.getScanner();
 
 	public WritterView(WritterController writterController) {
 		this.writterController = writterController;
@@ -18,8 +19,6 @@ public class WritterView {
 	public void show() {
 
 		boolean isRunning = true;
-		Scanner scanner = ApplicationContext.getScanner();
-		long id;
 
 		while (isRunning) {
 
@@ -39,40 +38,19 @@ public class WritterView {
 
 			switch (choose) {
 			case 1:
-				System.out.println("Enter the first name for new Writter:");
-				String firstName = scanner.nextLine();
-				System.out.println("Enter the last name for new Writter:");
-				scanner.nextLine();
-				String lastName = scanner.nextLine();
-				Writter createdWritter = writterController.createWritter(firstName, lastName);
-				System.out.println("Writter created: " + createdWritter);
+				createWritter();
 				break;
 			case 2:
-				System.out.println("Enter the writter id for update:");
-				id = scanner.nextLong();
-				System.out.println("Enter new first name for writter:");
-				scanner.nextLine();
-				String newFirstName = scanner.nextLine();
-				System.out.println("Enter new last name for writter:");
-				String newLastName = scanner.nextLine();
-				Writter updateWritter = writterController.updateWritter(id, newFirstName, newLastName);
-				System.out.println("Writter updated: " + updateWritter);
+				updateWritter();
 				break;
 			case 3:
-				System.out.println("Enter existing id: ");
-				id = scanner.nextLong();
-				writterController.deleteWritterById(id);
-				System.out.println("Writter deleted");
+				deleteWritter();
 				break;
 			case 4:
-				List<Writter> writters = writterController.getAllWritters();
-				System.out.println(writters);
+				getAllWritters();
 				break;
 			case 5:
-				System.out.println("Enter existing id: ");
-				id = scanner.nextLong();
-				Writter receivedWritter = writterController.getWritterById(id);
-				System.out.println("Writter received: " + receivedWritter);
+				getWritterById();
 				break;
 			case 0:
 				isRunning = false;
@@ -82,6 +60,46 @@ public class WritterView {
 				break;
 			}
 		}
+	}
+
+	private void createWritter() {
+		System.out.println("Enter the first name for new Writter:");
+		String firstName = scanner.nextLine();
+		System.out.println("Enter the last name for new Writter:");
+		String lastName = scanner.nextLine();
+		Writter createdWritter = writterController.createWritter(firstName, lastName);
+		System.out.println("Writter created: " + createdWritter);
+	}
+
+	private void updateWritter() {
+		System.out.println("Enter the writter id for update:");
+		long id = scanner.nextLong();
+		System.out.println("Enter new first name for writter:");
+		scanner.nextLine();
+		String newFirstName = scanner.nextLine();
+		System.out.println("Enter new last name for writter:");
+		String newLastName = scanner.nextLine();
+		Writter updateWritter = writterController.updateWritter(id, newFirstName, newLastName);
+		System.out.println("Writter updated: " + updateWritter);
+	}
+
+	private void deleteWritter() {
+		System.out.println("Enter existing id: ");
+		long id = scanner.nextLong();
+		writterController.deleteWritterById(id);
+		System.out.println("Writter deleted");
+	}
+
+	private void getAllWritters() {
+		List<Writter> writters = writterController.getAllWritters();
+		System.out.println(writters);
+	}
+
+	private void getWritterById() {
+		System.out.println("Enter existing id: ");
+		long id = scanner.nextLong();
+		Writter receivedWritter = writterController.getWritterById(id);
+		System.out.println("Writter received: " + receivedWritter);
 	}
 
 }

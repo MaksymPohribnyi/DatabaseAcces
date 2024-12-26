@@ -87,7 +87,7 @@ CREATE TABLE IF NOT EXISTS public.label_post
     CONSTRAINT label_id_fk FOREIGN KEY (label_id)
         REFERENCES public.label (id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        ON DELETE RESTRICT,
     CONSTRAINT post_id_fk FOREIGN KEY (post_id)
         REFERENCES public.post (id) MATCH SIMPLE
         ON UPDATE NO ACTION
