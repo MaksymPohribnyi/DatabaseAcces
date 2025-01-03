@@ -20,6 +20,7 @@
 		<lombok.version>1.18.36</lombok.version>
 		<mockito-junit.version>5.14.2</mockito-junit.version>
 		<assertJ.version>3.26.3</assertJ.version>
+		<hibernate.version>6.6.4.Final</hibernate.version>
 	</properties>
 
 	<dependencyManagement>
@@ -74,7 +75,12 @@
 			<version>${assertJ.version}</version>
 			<scope>test</scope>
 		</dependency>
-
+		<!-- https://mvnrepository.com/artifact/org.hibernate.orm/hibernate-core -->
+		<dependency>
+			<groupId>org.hibernate.orm</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
 
 	</dependencies>
 

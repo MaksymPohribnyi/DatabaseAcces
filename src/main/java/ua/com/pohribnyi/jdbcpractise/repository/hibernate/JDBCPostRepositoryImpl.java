@@ -1,4 +1,4 @@
-package ua.com.pohribnyi.jdbcpractise.repository.jdbc;
+package ua.com.pohribnyi.jdbcpractise.repository.hibernate;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

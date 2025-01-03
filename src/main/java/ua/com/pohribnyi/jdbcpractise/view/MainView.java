@@ -38,14 +38,7 @@ public class MainView {
 			case 3 -> applicationContext.getPostView().show();
 			case 0 -> {
 				isRunning = false;
-				try {
-					Connection opennedCon = DBUtils.getCurrentConnection();
-					if (opennedCon != null)
-						opennedCon.close();
-					System.out.println("GOOD BYE :)");
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
+				System.out.println("GOOD BYE :)");
 			}
 			default -> System.out.println("CHOOSED INCORRECT OPTION!");
 			}

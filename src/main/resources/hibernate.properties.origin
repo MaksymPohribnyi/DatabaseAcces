@@ -1,0 +1,10 @@
+#config db connection
+hibernate.driver_class=org.postgresql.Driver
+hibernate.connection.url=
+hibernate.username=
+hibernate.password=
+
+#config hibernate
+hibernate.show_sql=true
+hibernate.dialect=PostgreSQLDialect
+hibernate.format_sql=true

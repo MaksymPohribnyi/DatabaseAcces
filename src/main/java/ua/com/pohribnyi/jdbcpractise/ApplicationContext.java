@@ -8,9 +8,9 @@ import ua.com.pohribnyi.jdbcpractise.controller.WritterController;
 import ua.com.pohribnyi.jdbcpractise.repository.LabelRepository;
 import ua.com.pohribnyi.jdbcpractise.repository.PostRepository;
 import ua.com.pohribnyi.jdbcpractise.repository.WritterRepository;
-import ua.com.pohribnyi.jdbcpractise.repository.jdbc.JDBCLabelRepositoryImpl;
-import ua.com.pohribnyi.jdbcpractise.repository.jdbc.JDBCPostRepositoryImpl;
-import ua.com.pohribnyi.jdbcpractise.repository.jdbc.JDBCWritterRepositoryImpl;
+import ua.com.pohribnyi.jdbcpractise.repository.hibernate.HibernateLabelRepositoryImpl;
+import ua.com.pohribnyi.jdbcpractise.repository.hibernate.JDBCPostRepositoryImpl;
+import ua.com.pohribnyi.jdbcpractise.repository.hibernate.JDBCWritterRepositoryImpl;
 import ua.com.pohribnyi.jdbcpractise.service.LabelService;
 import ua.com.pohribnyi.jdbcpractise.service.PostService;
 import ua.com.pohribnyi.jdbcpractise.service.WritterService;
@@ -20,7 +20,7 @@ import ua.com.pohribnyi.jdbcpractise.view.WritterView;
 
 public class ApplicationContext {
 
-	private final LabelRepository labelRepository = new JDBCLabelRepositoryImpl();
+	private final LabelRepository labelRepository = new HibernateLabelRepositoryImpl();
 	private final LabelService labelService = new LabelService(labelRepository);
 	private final LabelController labelController = new LabelController(labelService);
 	private final LabelView labelView = new LabelView(labelController);

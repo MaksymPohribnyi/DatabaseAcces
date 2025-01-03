@@ -19,4 +19,4 @@ local.properties
 .classpath
 .settings/
 .loadpath
-application.properties
+hibernate.properties
