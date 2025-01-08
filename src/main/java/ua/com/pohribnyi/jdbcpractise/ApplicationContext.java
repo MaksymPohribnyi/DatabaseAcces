@@ -9,6 +9,7 @@ import ua.com.pohribnyi.jdbcpractise.repository.LabelRepository;
 import ua.com.pohribnyi.jdbcpractise.repository.PostRepository;
 import ua.com.pohribnyi.jdbcpractise.repository.WritterRepository;
 import ua.com.pohribnyi.jdbcpractise.repository.hibernate.HibernateLabelRepositoryImpl;
+import ua.com.pohribnyi.jdbcpractise.repository.hibernate.HibernateWritterRepositoryImpl;
 import ua.com.pohribnyi.jdbcpractise.repository.hibernate.JDBCPostRepositoryImpl;
 import ua.com.pohribnyi.jdbcpractise.repository.hibernate.JDBCWritterRepositoryImpl;
 import ua.com.pohribnyi.jdbcpractise.service.LabelService;
@@ -25,7 +26,7 @@ public class ApplicationContext {
 	private final LabelController labelController = new LabelController(labelService);
 	private final LabelView labelView = new LabelView(labelController);
 
-	private final WritterRepository writterRepository = new JDBCWritterRepositoryImpl();
+	private final WritterRepository writterRepository = new HibernateWritterRepositoryImpl();
 	private final WritterService writterService = new WritterService(writterRepository);
 	private final WritterController writterController = new WritterController(writterService);
 	private final WritterView writterView = new WritterView(writterController);

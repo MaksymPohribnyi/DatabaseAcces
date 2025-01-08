@@ -100,6 +100,7 @@ public class WritterView {
 		long id = scanner.nextLong();
 		Writter receivedWritter = writterController.getWritterById(id);
 		System.out.println("Writter received: " + receivedWritter);
+		System.out.println("Writter posts: " + receivedWritter.getPosts());
 	}
 
 }
