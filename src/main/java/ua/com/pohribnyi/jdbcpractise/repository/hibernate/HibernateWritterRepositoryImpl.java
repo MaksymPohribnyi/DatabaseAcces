@@ -1,15 +1,12 @@
 package ua.com.pohribnyi.jdbcpractise.repository.hibernate;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
 import ua.com.pohribnyi.jdbcpractise.exception.HibernateRepoException;
 import ua.com.pohribnyi.jdbcpractise.exception.WritterNotFoundException;
-import ua.com.pohribnyi.jdbcpractise.model.Post;
 import ua.com.pohribnyi.jdbcpractise.model.Writter;
 import ua.com.pohribnyi.jdbcpractise.repository.WritterRepository;
 import ua.com.pohribnyi.jdbcpractise.util.DBUtils;
@@ -45,6 +42,8 @@ public class HibernateWritterRepositoryImpl implements WritterRepository {
 	public Writter save(Writter t) {
 		try (Session session = DBUtils.openSession()) {
 			session.beginTransaction();
+//			// For tests:
+//			t.getPosts().add(Post.builder().content("new post").writter(t).build());
 			session.persist(t);
 			session.getTransaction().commit();
 			return t;
@@ -58,10 +57,18 @@ public class HibernateWritterRepositoryImpl implements WritterRepository {
 		try (Session session = DBUtils.openSession()) {
 			session.beginTransaction();
 //			// For tests:
-//			// -- checking the Hibernation response on operation with related list
+//			// -- checking the Hibernate response on operation with related list
 //			Writter entity = session.getReference(Writter.class, t.getId());
 //			List<Post> writterPosts = entity.getPosts();
-//			writterPosts.removeIf((p -> p.getId() == 2));
+//			Post writterTestPost = writterPosts.stream().filter(p -> p.getContent().contains("test")).findAny()
+//					.orElse(null);
+//			if (writterTestPost != null) {
+//				writterTestPost.setContent("testUPD");
+//				writterTestPost.setUpdatedAt(new Date());
+//			}
+//			writterPosts.removeIf((p -> p.getId() == 24)); // if orphanRemoval = true then hard delete post from db,
+//															// else we should get post and set post.wrtitter = null
+//															// then post.writter_id = null in db
 //			writterPosts.add(null);
 //			t.setPosts(writterPosts);
 			session.merge(t);
