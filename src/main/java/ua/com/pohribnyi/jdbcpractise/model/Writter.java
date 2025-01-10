@@ -26,7 +26,6 @@ import lombok.ToString;
 @Builder
 @ToString(exclude = { "posts" })
 public class Writter {
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")

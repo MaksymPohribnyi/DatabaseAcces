@@ -8,6 +8,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -39,7 +40,7 @@ public class Post {
 	@Column(name = "content")
 	private String content;
 
-	@Column(name = "created_at")
+	@Column(name = "created_at", updatable = false)
 	private Date createdAt;
 
 	@Column(name = "updated_at")
@@ -54,7 +55,7 @@ public class Post {
 	@Enumerated(EnumType.ORDINAL)
 	private PostStatus status;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "writter_id", referencedColumnName = "id")
 	@ToString.Exclude
 	private Writter writter;

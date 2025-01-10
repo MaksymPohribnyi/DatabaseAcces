@@ -1,6 +1,7 @@
 package ua.com.pohribnyi.jdbcpractise.controller;
 
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 import ua.com.pohribnyi.jdbcpractise.model.Label;
@@ -25,13 +26,15 @@ public class PostController {
 		return postService.getAll();
 	}
 	
-	public Post createPost(String content, Writter writter, List<Label> labels) {
+	public Post createPost(String content, Writter writter, List<Label> labels, Date createdAt) {
 		return postService.save(
 				Post.builder()
 				.content(content)
 				.writter(writter)
 				.labels(labels)
 				.status(PostStatus.UNDER_REVIEW)
+				.createdAt(createdAt)
+				.updatedAt(createdAt)
 				.build());
 	}
 	

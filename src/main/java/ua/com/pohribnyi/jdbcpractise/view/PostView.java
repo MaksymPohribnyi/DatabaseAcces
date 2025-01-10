@@ -1,5 +1,6 @@
 package ua.com.pohribnyi.jdbcpractise.view;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -96,7 +97,8 @@ public class PostView {
 			Set<Long> setOfLabelIds = labelIds.stream().map(Long::parseLong).collect(Collectors.toSet());
 			List<Label> choosedLabels = allLabels.stream().filter(l -> setOfLabelIds.contains(l.getId()))
 					.collect(Collectors.toList());
-			Post createdPost = postController.createPost(content, writter, choosedLabels);
+			Post createdPost = postController.createPost(content, writter, choosedLabels,
+					new Timestamp(System.currentTimeMillis()));
 			System.out.println("Post created: " + createdPost);
 		} else {
 			System.out.println("Incorrect writter id. Try again");
@@ -118,6 +120,7 @@ public class PostView {
 					.orElse(null);
 			if (updWritter != null) {
 				List<Label> allLabels = showAllLabels();
+				System.out.println("Now choose one id from label list, or several spliting by ',':");
 				scanner.nextLine();
 				String idLine = scanner.nextLine();
 				List<String> labelIds = new ArrayList<>(Arrays.asList(idLine.split(",")));
@@ -148,6 +151,8 @@ public class PostView {
 		long id = scanner.nextLong();
 		Post receivedPost = postController.getPostById(id);
 		System.out.println("Post received: " + receivedPost);
+		System.out.println("Post Writter: " + receivedPost.getWritter());
+		System.out.println("Post labels: " + receivedPost.getLabels());
 	}
 
 	private void getAllPosts() {
@@ -163,10 +168,10 @@ public class PostView {
 	}
 
 	private List<Label> showAllLabels() {
+		List<Label> allLabels = labelController.getAllLabels();
 		System.out.printf("---------------------------%n");
 		System.out.printf("| %-5s | %-15s |%n", "ID", "name");
 		System.out.printf("---------------------------%n");
-		List<Label> allLabels = labelController.getAllLabels();
 		for (Label label : allLabels) {
 			System.out.printf("| %-5s ", label.getId());
 			System.out.printf("| %-15s |", label.getName());
@@ -176,10 +181,10 @@ public class PostView {
 	}
 
 	private List<Writter> showAllWritters() {
+		List<Writter> writters = writterController.getAllWritters();
 		System.out.printf("----------------------------------------%n");
 		System.out.printf("| %-5s | %-10s | %-15s |%n", "ID", "first_name", "last_name");
 		System.out.printf("----------------------------------------%n");
-		List<Writter> writters = writterController.getAllWritters();
 		for (Writter writter : writters) {
 			System.out.printf("| %-5s ", writter.getId());
 			System.out.printf("| %-10s ", writter.getFirstName());

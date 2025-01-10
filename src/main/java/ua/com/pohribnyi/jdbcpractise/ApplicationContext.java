@@ -9,9 +9,8 @@ import ua.com.pohribnyi.jdbcpractise.repository.LabelRepository;
 import ua.com.pohribnyi.jdbcpractise.repository.PostRepository;
 import ua.com.pohribnyi.jdbcpractise.repository.WritterRepository;
 import ua.com.pohribnyi.jdbcpractise.repository.hibernate.HibernateLabelRepositoryImpl;
+import ua.com.pohribnyi.jdbcpractise.repository.hibernate.HibernatePostRepositoryImpl;
 import ua.com.pohribnyi.jdbcpractise.repository.hibernate.HibernateWritterRepositoryImpl;
-import ua.com.pohribnyi.jdbcpractise.repository.hibernate.JDBCPostRepositoryImpl;
-import ua.com.pohribnyi.jdbcpractise.repository.hibernate.JDBCWritterRepositoryImpl;
 import ua.com.pohribnyi.jdbcpractise.service.LabelService;
 import ua.com.pohribnyi.jdbcpractise.service.PostService;
 import ua.com.pohribnyi.jdbcpractise.service.WritterService;
@@ -31,7 +30,7 @@ public class ApplicationContext {
 	private final WritterController writterController = new WritterController(writterService);
 	private final WritterView writterView = new WritterView(writterController);
 
-	private final PostRepository postRepository = new JDBCPostRepositoryImpl();
+	private final PostRepository postRepository = new HibernatePostRepositoryImpl();
 	private final PostService postService = new PostService(postRepository);
 	private final PostController postController = new PostController(postService);
 	private final PostView postView = new PostView(postController, writterController, labelController);
@@ -45,11 +44,13 @@ public class ApplicationContext {
 	public LabelView getLabelView() {
 		return labelView;
 	}
+
 	public WritterView getWritterlView() {
 		return writterView;
 	}
+
 	public PostView getPostView() {
 		return postView;
 	}
-	
+
 }
