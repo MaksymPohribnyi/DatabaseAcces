@@ -2,7 +2,6 @@ package ua.com.pohribnyi.jdbcpractise.model;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -59,24 +58,5 @@ public class Post {
 	@JoinColumn(name = "writter_id", referencedColumnName = "id")
 	@ToString.Exclude
 	private Writter writter;
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Post other = (Post) obj;
-		return Objects.equals(content, other.content) && Objects.equals(createdAt, other.createdAt)
-				&& Objects.equals(id, other.id) && Objects.equals(labels, other.labels) && status == other.status
-				&& Objects.equals(updatedAt, other.updatedAt) && Objects.equals(writter, other.writter);
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(content, createdAt, id, labels, status, updatedAt, writter);
-	}
 
 }

@@ -1,11 +1,8 @@
 package ua.com.pohribnyi.jdbcpractise.view;
 
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.Scanner;
 
 import ua.com.pohribnyi.jdbcpractise.ApplicationContext;
-import ua.com.pohribnyi.jdbcpractise.util.DBUtils;
 
 public class MainView {
 
